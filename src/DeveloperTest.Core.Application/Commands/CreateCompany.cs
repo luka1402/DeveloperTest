@@ -54,17 +54,19 @@ public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand,
             await _systemLogRepository.AddSystemLogAsync(companyLog, cancellationToken);
             await _systemLogRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             companyLog = null;
-            foreach (var employee in request.Employees)
+
+            foreach (var employee in request.Employees.Where(x => x.Id is null))
             {
+
                 var obj = new Employee()
                 {
                     Email = employee.Email,
                     Title = (TitleTypes)Enum.Parse(typeof(TitleTypes), employee.Title)
 
                 };
-
                 await _employeeRepository.AddEmployeeAsync(obj, cancellationToken);
                 var createEmployees = await _employeeRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
                 if (createEmployees > 0)
                 {
                     var objLog = new SystemLog()
@@ -91,6 +93,24 @@ public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand,
                         isCreated = true;
                 }
             }
+
+            if (request.Employees.Any(x => x.Id.HasValue))
+            {
+                foreach (var employee in request.Employees.Where(x => x.Id is not null))
+                {
+                    EmployeeCompany employeeCompany = new EmployeeCompany()
+                    {
+                        CompanyId = company.Id,
+                        EmployeeId = employee.Id.Value
+                    };
+                    await _employeeCompanyRepository.AddEmployeeCompanyAsync(employeeCompany, cancellationToken);
+                    var employeeCompanyCreated = await _employeeCompanyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+                    if (employeeCompanyCreated > 0)
+                        isCreated = true;
+                }
+            }
+
 
         }
         return isCreated;

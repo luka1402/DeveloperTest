@@ -33,7 +33,7 @@ public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyComm
                 .WithErrorCode(ErrorCode.IS_EMPTY)
                 .EmailAddress()
                 .WithErrorCode(ErrorCode.NOT_VALID)
-                .Must(EmailMustBeUnique)
+                .Must(EmailMustBeUnique).When(x => x.Id is null)
                 .WithErrorCode(ErrorCode.IS_NOT_UNIQUE);
             employee.RuleFor(x => x.Title)
                 .NotEmpty()
