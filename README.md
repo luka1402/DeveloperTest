@@ -5,7 +5,7 @@
 ### .EF core 6
 
 ### DDD
-### MedaitR
+### MediatR
 ### CQRS
 
 ### Fluent Validator
