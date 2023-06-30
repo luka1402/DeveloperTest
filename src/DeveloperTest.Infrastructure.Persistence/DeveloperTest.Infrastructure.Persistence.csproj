@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DeveloperTest.Core.Application\DeveloperTest.Core.Application.csproj" />
     <ProjectReference Include="..\DeveloperTest.Core.Domain\DeveloperTest.Core.Domain.csproj" />
+    <ProjectReference Include="..\DeveloperTest.Core.Framework\DeveloperTest.Core.Framework.csproj" />
   </ItemGroup>
 
 </Project>

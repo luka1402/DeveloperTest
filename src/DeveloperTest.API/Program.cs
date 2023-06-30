@@ -1,3 +1,7 @@
+using DeveloperTest.API;
+using DeveloperTest.Infrastructure.Persistence;
+using DeveloperTest.Core.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//inject
+builder.Services
+    .AddPersistence(builder.Configuration)
+    .AddApplication()
+    .AddValidator();
+
 
 var app = builder.Build();
 

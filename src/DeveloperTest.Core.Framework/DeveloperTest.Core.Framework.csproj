@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DeveloperTest.Core.Framework\DeveloperTest.Core.Framework.csproj" />
-  </ItemGroup>
-
 </Project>
